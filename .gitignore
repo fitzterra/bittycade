@@ -1,0 +1,8 @@
+# Sketchup backup files
+*.skb
+# Vim Swap files
+.*.sw*
+# The build dir
+_build-*/
+# tags files
+tags
