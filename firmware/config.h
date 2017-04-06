@@ -10,6 +10,9 @@
 #define LEDMATRIX_X 8
 // Y Size of the LED matrix
 #define LEDMATRIX_Y 8
+// Set the rotation angle if needed - 0, 90, 180 or 270
+#define DISPLAYROTATE 90
+
 // Pin potentiometer is connected to
 //#define CONTROLLERPOTPIN A0
 #define CONTROLLERPOTPIN A7
