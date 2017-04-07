@@ -17,14 +17,12 @@ void Menu::update() {
     // offset into the menu sprite from where we need to start filling the
     // display.
     uint8_t offset = controller->xPos;
+    //Serial << "menu offs: " << offset << endl;
 
 	// Display sprite from offset
-	for (int y=0; y<MENUHEIGHT; y++)
-	{
-		for (int x=0; x<controller->objWidth; x++)
-		{
+	for (int y=0; y<MENUHEIGHT; y++) {
+		for (int x=0; x<controller->objWidth; x++) {
 			display->drawPixel(x, y, menuStrip[y][x + offset] == 1);
-			//display.drawPixel(y, 7-x, menuStrip[y][x + offset] == 1);
 		}
 	}
 

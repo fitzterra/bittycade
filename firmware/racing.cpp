@@ -36,17 +36,22 @@ void Racing::updateTrack() {
 bool Racing::updateCar() {
     // Update the postion
     car.x = controller->xPos;
+    //Serial << "car x: " << car.x << endl;
 
     // Calculate the row offset into the track the car is at
     int16_t carTrackOffs = trackOffset - car.y;
     // Get the track row
     byte trackRow = carTrackOffs>=0 ? track[carTrackOffs] : 0;
+    // Map the car position as a bit in the byte with position 0 equal to the
+    // MSB in the byte
+    byte carMap = B10000000 >> car.x;
 
-    bool crash = trackRow & (1<<car.x);
+    // Test for a crash before we place the car in the track row
+    bool crash = trackRow & carMap;
 
-    // If the car is on, merge it onto the track
+    // If the car is visible, merge it onto the track
     if(carIsOn)
-        trackRow |= (1 << car.x);
+        trackRow |= carMap;
 
     // Update display
     display->drawRow(car.y, trackRow);
@@ -85,8 +90,8 @@ void Racing::reset() {
     // controlling.
     controller->objWidth = 1;
     // Set the controller min and max to the screen size
-    controller->xMin = LEDMATRIX_X-1;
-    controller->xMax = 0;
+    controller->xMin = 0;
+    controller->xMax = LEDMATRIX_X;
     // The overall delay in the game loop
     gameDelay = 50;
     gameOver = false;

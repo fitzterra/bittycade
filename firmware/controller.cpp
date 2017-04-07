@@ -13,6 +13,7 @@ Controller::Controller() {
 void Controller::update() {
     // Get the pot analog position
     uint16_t potV = analogRead(CONTROLLERPOTPIN);
+    //Serial << "pot: " << potV << endl;
     // Set the real X position by mapping the pot value to the correct min and
     // max values after taking objWidth into account.
 #ifdef INVERTPOTCONTROLL

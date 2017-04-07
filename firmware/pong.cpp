@@ -33,7 +33,7 @@ void Pong::reset() {
     controller->xMin = 0;
     controller->xMax = LEDMATRIX_X;
     // Position paddle
-    paddle.x = (LEDMATRIX_X-1 - paddleSize) / 2;
+    paddle.x = controller->xPos;
     paddle.y = LEDMATRIX_Y - 1;
 
     // Start at level 0
@@ -59,8 +59,8 @@ void Pong::reset() {
 }
 
 void Pong::update() {
-    controller->update();
     paddle.x = controller->xPos;
+    //Serial << "paddle x: " << paddle.x << endl;
 
 	updateBumpers();
 
