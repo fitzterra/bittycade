@@ -230,4 +230,5 @@ B10000001,
 B10000001
 };			
 			
+uint16_t TRACKLEN = sizeof(track)/sizeof(byte);
 #endif // __SPRITES_H__

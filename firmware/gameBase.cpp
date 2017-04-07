@@ -3,6 +3,7 @@
 #include "gameBase.h"
 
 void Game::play() {
+    // Always start with a reset
     reset();
 
     // This should be done in reset, but let's make sure here

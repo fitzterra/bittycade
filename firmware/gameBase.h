@@ -38,6 +38,7 @@ class Game {
         * The game update method.
         * Called from play() on every play loop to update the game variables
         * and the display. The controller values would already be up to date
+        * (this is done in the main play loop before calling this method)
         * when this method is called.
         **/
        virtual void update() =0;

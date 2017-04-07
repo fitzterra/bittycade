@@ -1,11 +1,13 @@
 #include "config.h"
 #include "menu.h"
 #include "pong.h"
+#include "racing.h"
 
 Controller controller;
 Display display;
 Menu menu(&display, &controller);
 Pong pong(&display, &controller);
+Racing racing(&display, &controller);
 
 void setup() 
 {
@@ -18,6 +20,12 @@ void loop()
     uint8_t game = menu.selectGame();
     Serial << "Game: " << game << endl;
 
-    if(game == 0)
-        pong.play();
+    switch(game) {
+        case 0:
+            pong.play();
+            break;
+        case 5:
+            racing.play();
+            break;
+    }
 }

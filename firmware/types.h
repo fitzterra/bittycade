@@ -1,8 +1,7 @@
 #ifndef __TYPES_H__
 #define __TYPES_H__
 
-struct point
-{
+struct point {
   int x;
   int y;
 };
