@@ -2,7 +2,6 @@
 
 extern byte lost[];
 extern byte up[];
-extern int menuStrip[MENUHEIGHT][MENUWIDTH];
 
 void Pong::updateBumpers() {
     point bumper;

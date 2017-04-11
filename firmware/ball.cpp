@@ -2,10 +2,10 @@
 
 void Ball::initialise() {
 	position.x = random(0, LEDMATRIX_X-1);
-	position.y = 0;
+	position.y = LEDMATRIX_Y-2;
 
 	direction.x = random(-1, 2);
-	direction.y = 1;
+	direction.y = -1;
 }
 
 ballState Ball::move(point *paddle, int paddleWidth) {
