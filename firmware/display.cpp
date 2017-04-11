@@ -71,8 +71,12 @@ void Display::drawPixel(uint8_t x, uint8_t y) {
 }
 
 void Display::drawObject(uint8_t size, point *position) {
+    drawObject(size, position, true);
+}
+
+void Display::drawObject(uint8_t size, point *position, bool on) {
 	for (uint8_t i = 0; i < size; i++) {
-        drawPixel(position->x + i, position->y);
+        drawPixel(position->x + i, position->y, on);
 	}
 }
 

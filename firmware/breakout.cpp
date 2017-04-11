@@ -4,6 +4,7 @@ extern byte lost[];
 extern byte up[];
 
 void BreakOut::reset() {
+    display->clear();
     // Always start slow
     gameDelay = 200;
     // Start with a large paddle
@@ -19,77 +20,101 @@ void BreakOut::reset() {
     // Start at level 1
     level = 1;
 
-	setupLevel(level);
+    setupLevel(level);
 
-	ball.initialise();  
+    ball.initialise();  
 }
 
 void BreakOut::update() {
+    // Remove ball and paddle from display
+    display->drawPixel(ball.position.x, ball.position.y, false);
+    display->drawObject(paddleSize, &paddle, false);
+
     paddle.x = controller->xPos;
     //Serial << "paddle x: " << paddle.x << endl;
 
-	switch(ball.move(&paddle, paddleSize)) {
+    switch(ball.move(&paddle, paddleSize)) {
         case bsOut:
-	        display->flashSprite(lost, 4, 500); 
+            display->flashSprite(lost, 4, 500); 
             gameOver = true;
-	        clearBricks();
+            clearBricks();
+            //Serial << "bricks left after clear: " << bricks.size() << endl;
             return;
             break;
         case bsIn:
         case bsBounce:
             break;
-	}
+    }
 
-	display->clear();
-    display->drawObject(1, &(ball.position));
+    updateBricks(&ball);
+    display->drawPixel(ball.position.x, ball.position.y);
     display->drawObject(paddleSize, &paddle);
-
-	updateBricks(&ball);
-
-	for (int i = 0; i < bricks.size(); i++) {
-		point *brick = bricks.get(i);
-
-		display->drawPixel(brick->x, brick->y);
-	}
-
 }
 
 void BreakOut::levelUp() {
-	level++;
+    level++;
 
-	display->flashSprite(up, 3, 500); 
+    display->flashSprite(up, 3, 500); 
 
-	// A little bit faster now
-	gameDelay -= 30;
+    // A little bit faster now
+    gameDelay -= 30;
 
-	setupLevel(level);
+    setupLevel(level);
 
-	ball.initialise();
+    ball.initialise();
 
 
 }
 
 void BreakOut::spawnBrick(int y, int x) {
-	point *position;
-	position = (struct point*)malloc(sizeof(struct point));
-	position->x = x;
-	position->y = y;
+    point *brick;
+    brick = (struct point*)malloc(sizeof(struct point));
+    brick->x = x;
+    brick->y = y;
 
-	bricks.add(position);
+    bricks.add(brick);
+    display->drawPixel(brick->x, brick->y);
 }
 
 void BreakOut::setupLevel(int lvl) {
-	// first level, two rows of bricks
-	for (int i = 0; i <= lvl; i++) {
-		spawnBrick(i, 0);
-		spawnBrick(i, 1);
-		spawnBrick(i, 2);
-		spawnBrick(i, 3);
-		spawnBrick(i, 4);
-		spawnBrick(i, 5);
-		spawnBrick(i, 6);
-		spawnBrick(i, 7);
-	}
+    // first level, two rows of bricks
+    for (int i = 0; i <= lvl; i++) {
+        spawnBrick(i, 0);
+        spawnBrick(i, 1);
+        spawnBrick(i, 2);
+        spawnBrick(i, 3);
+        spawnBrick(i, 4);
+        spawnBrick(i, 5);
+        spawnBrick(i, 6);
+        spawnBrick(i, 7);
+    }
+}
+
+void BreakOut::updateBricks(Ball *ball) {
+    point *brick;
+
+    for (int i = 0; i < bricks.size(); i++) {
+        brick = bricks.get(i);
+
+        if (ball->position.x == brick->x && ball->position.y == brick->y) {
+            display->drawPixel(brick->x, brick->y, false);
+            destroyBrick(i);
+
+            int newX = -1 * ball->direction.x;
+
+            if (ball->direction.x == 0 && ball->direction.y == 1) {
+                newX = random(2) == 0 ? -1 : 1;
+            }
+
+            ball->direction.x = newX;
+            ball->direction.y *= -1;
+            //Serial << "bricks left: " << bricks.size() << endl;
+        }
+    }
+
+    if (bricks.size() == 0) {
+        levelUp();
+    }
 }
 
 void BreakOut::destroyBrick(int i) {
@@ -97,33 +122,8 @@ void BreakOut::destroyBrick(int i) {
     free(brick);
 }
 
-void BreakOut::updateBricks(Ball *ball) {
-    point *brick;
-
-	for (int i = 0; i < bricks.size(); i++) {
-		brick = bricks.get(i);
-
-		if (ball->position.x == brick->x && ball->position.y == brick->y) {
-            destroyBrick(i);
-
-			int newX = -1 * ball->direction.x;
-
-			if (ball->direction.x == 0 && ball->direction.y == 1) {
-				newX = random(2) == 0 ? -1 : 1;
-			}
-
-			ball->direction.x = newX;
-			ball->direction.y *= -1;
-		}
-	}
-
-	if (bricks.size() == 0) {
-		levelUp();
-	}
-}
-
 void BreakOut::clearBricks() {
-	for (int i=0; i < bricks.size(); i++) {
-        destroyBrick(i);
-	}
+    while (bricks.size()) {
+        destroyBrick(0);
+    }
 }

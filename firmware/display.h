@@ -24,6 +24,7 @@ class Display {
     void drawPixel(uint8_t x, uint8_t y, bool on);
     void drawPixel(uint8_t x, uint8_t y);
     void drawObject(uint8_t size, point *position);
+    void drawObject(uint8_t size, point *position, bool on);
     void flashSprite(byte *sprite, uint8_t frames, uint32_t duration);
     void chaos(uint32_t duration);
     void test();
