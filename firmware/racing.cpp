@@ -63,8 +63,6 @@ bool Racing::updateCar() {
 }
 
 void Racing::update() {
-    //car = controller->xPos;
-
     // First we update the track
     updateTrack();
 
