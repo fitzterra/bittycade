@@ -53,7 +53,7 @@ void Snake::checkSteering() {
         steering = STEER_RIGHT;
     else if(controller->leftButtonPressed && !controller->rightButtonPressed)
         steering = STEER_LEFT;
-    Serial << "steering: " << steering << endl;
+    //Serial << "steering: " << steering << endl;
 }
 
 /**
@@ -65,7 +65,7 @@ bool Snake::checkCollisions() {
     point *head = body.get(0);
     if(head->x < 0 || head->y < 0 ||
        head->x >= LEDMATRIX_X || head->y >= LEDMATRIX_Y) {
-        Serial << "snake in the grass...\n";
+        //Serial << "snake in the grass...\n";
         return true;
     }
     
@@ -74,7 +74,7 @@ bool Snake::checkCollisions() {
     for(uint8_t i=body.size()-1; i>0; i--) {
         seg = body.get(i);
         if(head->x==seg->x && head->y==seg->y) {
-            Serial << "eat myself at " << i << endl;
+            //Serial << "eat myself at " << i << endl;
             return true;
         }
     }
