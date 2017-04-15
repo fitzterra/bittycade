@@ -9,9 +9,9 @@
 
 class Menu: public Game {
 private:
-    uint8_t selectedGame;
+    games selectedGame;
 public:
-    uint8_t selectGame();
+    games selectGame();
     Menu(Display *d, Controller *c) : Game(d, c) {};
     void reset();
     void update();

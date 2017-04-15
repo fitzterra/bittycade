@@ -1,4 +1,5 @@
 #include "config.h"
+#include "types.h"
 #include "menu.h"
 #include "pong.h"
 #include "breakout.h"
@@ -19,20 +20,23 @@ void setup() {
 }
 
 void loop() {
-    uint8_t game = menu.selectGame();
+    games game = menu.selectGame();
     Serial << "Game: " << game << endl;
 
     switch(game) {
-        case 0:
+        case gmPong:
             pong.play();
             break;
-        case 3:
+        case gmTedshow:
+        case gmSpaceInvaders:
+            break;
+        case gmSnake:
             snake.play();
             break;
-        case 4:
+        case gmBreakOut:
             breakout.play();
             break;
-        case 5:
+        case gmRacing:
             racing.play();
             break;
     }
