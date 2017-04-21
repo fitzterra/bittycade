@@ -5,6 +5,7 @@
 #include "breakout.h"
 #include "racing.h"
 #include "snake.h"
+#include "spaceInvaders.h"
 
 Controller controller;
 Display display;
@@ -13,6 +14,7 @@ Pong pong(&display, &controller);
 BreakOut breakout(&display, &controller);
 Racing racing(&display, &controller);
 Snake snake(&display, &controller);
+SpaceInvaders spaceinvaders(&display, &controller);
 
 void setup() {
 	Serial.begin(115200);
@@ -28,7 +30,9 @@ void loop() {
             pong.play();
             break;
         case gmTedshow:
+            break;
         case gmSpaceInvaders:
+            spaceinvaders.play();
             break;
         case gmSnake:
             snake.play();
