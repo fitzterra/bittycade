@@ -103,7 +103,6 @@ void SpaceInvaders::reset() {
     // Set the controller min and max to the screen size
     controller->xMin = 0;
     controller->xMax = LEDMATRIX_X;
-    controller->allowPause = true;
     controller->update();
     // Position ship
     ship.x = controller->xPos;
