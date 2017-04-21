@@ -7,6 +7,8 @@
 
 class Controller {
 private:
+    void pause();
+    void updateButtons();
 public:
     // The minimum value to map the analog pot input to. This will normally be
     // 0, but the game can set this to any value for special needs. It will be
@@ -29,6 +31,8 @@ public:
     // Button states.
     bool rightButtonPressed;
     bool leftButtonPressed;
+    // If the game allows pausing
+    bool allowPause = false;
 
     // Constructor
     Controller();

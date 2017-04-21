@@ -10,6 +10,33 @@ Controller::Controller() {
     update();
 }
 
+void Controller::updateButtons() {
+    // We are using the internal pullups for the buttons, so the state is invereted.
+    rightButtonPressed = !digitalRead(CONTROLLERRIGHTBUTTONPIN);
+    leftButtonPressed = !digitalRead(CONTROLLERLEFTBUTTONPIN);
+}
+
+void Controller::pause() {
+    // We only enter this state when pausing is allowed and both buttons have
+    // been pressed. Wait until both buttons have been released
+    do {
+        delay(100);
+        updateButtons();
+    } while(rightButtonPressed && leftButtonPressed);
+
+    // Now we pause until any button is pressed to unpause
+    do {
+        delay(100);
+        updateButtons();
+    } while(!(rightButtonPressed || leftButtonPressed));
+
+    // Unpaused, but wait for both buttons to be released again
+    do {
+        delay(100);
+        updateButtons();
+    } while(rightButtonPressed && leftButtonPressed);
+}
+
 void Controller::update() {
     // Get the pot analog position
     uint16_t potV = analogRead(CONTROLLERPOTPIN);
@@ -23,9 +50,11 @@ void Controller::update() {
 #endif
     
     // Get the button states.
-    // We are using the internal pullups for the buttons, so the state is invereted.
-    rightButtonPressed = !digitalRead(CONTROLLERRIGHTBUTTONPIN);
-    leftButtonPressed = !digitalRead(CONTROLLERLEFTBUTTONPIN);
+    updateButtons();
+
+    // Pausing?
+    if (allowPause && rightButtonPressed && leftButtonPressed)
+        pause();
   
     // Indicate the state of the right button
     digitalWrite(BUTTONLED, rightButtonPressed);

@@ -17,5 +17,9 @@ void Game::play() {
         // Keep things playable
         delay(gameDelay);
     }
+
+    // If the last game has allowed pausing, auto clear it here so the next
+    // game does not have to worry about clearing it in it's reset method.
+    controller->allowPause = false;
 }
 
