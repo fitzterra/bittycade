@@ -29,8 +29,6 @@ void loop() {
         case gmPong:
             pong.play();
             break;
-        case gmTedshow:
-            break;
         case gmSpaceInvaders:
             spaceinvaders.play();
             break;

@@ -36,9 +36,9 @@
 //#define CS 10
 #define CS 11
 // This may be changed or defined elsewhere later!
-#define NUM_GAMES 6 /// This excludes the Menu which is also handled as a game!
+#define NUM_GAMES 5 /// This excludes the Menu which is also handled as a game!
 // Size of the menu sprite
-#define MENUWIDTH 48
+#define MENUWIDTH NUM_GAMES*8
 #define MENUHEIGHT 8
 
 #endif // __CONFIG__H__

@@ -6,7 +6,7 @@ struct point {
   int8_t y;
 };
 
-enum games { gmPong, gmTedshow, gmSpaceInvaders, gmSnake, gmBreakOut, gmRacing};
+enum games { gmPong, gmSpaceInvaders, gmSnake, gmBreakOut, gmRacing};
 
 enum tedShowState { tsLights, tsFalling };
 
