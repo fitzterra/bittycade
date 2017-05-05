@@ -1,6 +1,6 @@
 # Arduino Make file. Refer to https://github.com/sudar/Arduino-Makefile
 
-ARDUINO_DIR = /usr/local/share/arduino-1.6.11
+ARDUINO_DIR = /usr/local/share/arduino-1.8.2
 
 ARCHITECTURE  = avr
 BOARD_TAG    = nano
