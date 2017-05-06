@@ -28,9 +28,8 @@ MONITOR_BAUDRATE = 115200
 ARDUINO_LIBS = \
 		   LinkedList \
 		   LedControl \
-		   Streaming
-#		   LiquidCrystal_I2C \
-#		   Wire
+		   Streaming  \
+		   Encoder
 
 -include $(ARDMK_DIR)/Arduino.mk
 

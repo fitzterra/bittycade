@@ -27,7 +27,7 @@ void Menu::update() {
 	}
 
 	// Any button pressed?
-	if (controller->rightButtonPressed || controller->leftButtonPressed)
+	if (controller->anyButtonPressed())
 	{
         // Calculate the selected game
         selectedGame = games(offset / (MENUWIDTH / NUM_GAMES));

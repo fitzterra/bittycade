@@ -4,11 +4,20 @@
 #include <stdint.h>
 #include "config.h"
 #include "types.h"
+#if DIRCONTR==CONTRL_ROTARY
+    #include <Encoder.h>
+#endif
 
 class Controller {
 private:
     void pause();
     void updateButtons();
+#if DIRCONTR==CONTRL_POT
+    void updatePot();
+#else
+    Encoder encoder = Encoder(ROTARY_A, ROTARY_B);
+    void updateEncoder();
+#endif
 public:
     // The minimum value to map the analog pot input to. This will normally be
     // 0, but the game can set this to any value for special needs. It will be
@@ -31,6 +40,9 @@ public:
     // Button states.
     bool rightButtonPressed;
     bool leftButtonPressed;
+#if DIRCONTR==CONTRL_ROTARY
+    bool rotaryButtonPressed;
+#endif
     // If the game allows pausing
     bool allowPause = false;
 
@@ -48,6 +60,11 @@ public:
      * further computation in any instance using the controller.
      ***/
     void update();
+
+    /**
+     * Returns true if any defined button is pressed. False otherwise.
+     **/
+    bool anyButtonPressed();
 };
 
 #endif // __CONTROLLER_H__
