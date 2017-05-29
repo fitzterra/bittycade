@@ -30,8 +30,8 @@
     //#define INVERTPOTCONTROL
 #else
     // Rotary encoder settings
-    #define ROTARY_A 2
-    #define ROTARY_B 3
+    #define ROTARY_A 3
+    #define ROTARY_B 2
     // Will use internal pullup for the button
     #define ROTARY_BUTTON 4
 #endif

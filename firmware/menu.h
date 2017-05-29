@@ -9,10 +9,10 @@
 
 class Menu: public Game {
 private:
-    games selectedGame;
+    uint8_t currGame;
 public:
     games selectGame();
-    Menu(Display *d, Controller *c) : Game(d, c) {};
+    Menu(Display *d, Controller *c) : Game(d, c) {currGame=0;};
     void reset();
     void update();
 };

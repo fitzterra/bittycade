@@ -2,13 +2,13 @@
 #include "sprites.h"
 
 void Menu::reset() {
-    // Preset selected game
-    selectedGame = games(0);
     // Set the controller min and max to the menu sprite size
     controller->xMin = 0;
-    controller->xMax = MENUWIDTH+1;
+    controller->xMax = NUM_GAMES;
     // Set the controller object width to the width of one menu
-    controller->objWidth = MENUWIDTH / NUM_GAMES;
+    controller->objWidth = 1;
+    // Set the controller to the previous game
+    controller->setXpos(currGame);
 }
 
 void Menu::update() {
@@ -19,23 +19,17 @@ void Menu::update() {
     uint8_t offset = controller->xPos;
     //Serial << "menu offs: " << offset << endl;
 
-	// Display sprite from offset
-	for (int y=0; y<MENUHEIGHT; y++) {
-		for (int x=0; x<controller->objWidth; x++) {
-			display->drawPixel(x, y, menuStrip[y][x + offset] == 1);
-		}
-	}
+    // Display the menu sprite for this game
+    display->drawSprite(spriteMenus[offset]);
 
-	// Any button pressed?
-	if (controller->anyButtonPressed())
-	{
-        // Calculate the selected game
-        selectedGame = games(offset / (MENUWIDTH / NUM_GAMES));
+    // Any button pressed?
+    if (controller->anyButtonPressed())
+    {
+        // Save the currently selected game
+        currGame = offset;
         // Indicate game over
         gameOver = true;
-
-        // Serial << "offset: " << offset << endl;
-	}
+    }
 }
 
 /**
@@ -46,5 +40,5 @@ games Menu::selectGame() {
     // Call the play loop until it exits
     play();
 
-    return selectedGame;
+    return games(currGame);
 }
